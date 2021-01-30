@@ -12,6 +12,12 @@ class DinosaursController < ApplicationController
     end
   end
 
+  def destroy
+    Dinosaur.find(params[:id]).destroy!
+
+    head :no_content
+  end
+
   private
 
   def dinosaur_params

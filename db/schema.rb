@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_30_163452) do
+ActiveRecord::Schema.define(version: 2021_01_31_161720) do
+
+  create_table "cages", force: :cascade do |t|
+    t.string "cage_status"
+    t.string "cage_type"
+    t.string "species"
+    t.integer "max_dinosaurs"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -18,6 +27,8 @@ ActiveRecord::Schema.define(version: 2021_01_30_163452) do
     t.string "diet"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "cage_id"
+    t.index ["cage_id"], name: "index_dinosaurs_on_cage_id"
   end
 
 end

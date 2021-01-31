@@ -1,8 +1,11 @@
 class DinosaursController < ApplicationController
+
+  # render all dinosaurs
   def index
     render json: Dinosaur.all
   end
 
+  # create a dinosaur
   def create
     dinosaur = Dinosaur.new(dinosaur_params)
     if dinosaur.save
@@ -12,6 +15,10 @@ class DinosaursController < ApplicationController
     end
   end
 
+  def update
+    # dinosaur = Dinosaur.find(params[:id])
+
+  # delete a dinosaur
   def destroy
     Dinosaur.find(params[:id]).destroy!
 

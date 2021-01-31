@@ -16,6 +16,13 @@ class CagesController < ApplicationController
     end
   end
 
+  # delete a cage
+  def destroy
+    Cage.find(params[:id]).destroy!
+
+    head :no_content
+  end
+
   private
 
   def cage_params

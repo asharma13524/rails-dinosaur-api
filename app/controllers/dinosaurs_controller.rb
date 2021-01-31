@@ -8,6 +8,7 @@ class DinosaursController < ApplicationController
   # create a dinosaur
   def create
     dinosaur = Dinosaur.new(dinosaur_params)
+
     if dinosaur.save
       render json: dinosaur, status: :created
     else
@@ -28,6 +29,6 @@ class DinosaursController < ApplicationController
   private
 
   def dinosaur_params
-    params.require(:dinosaur).permit(:name, :species, :diet)
+    params.require(:dinosaur).permit(:name, :species, :diet, :cage_id)
   end
 end

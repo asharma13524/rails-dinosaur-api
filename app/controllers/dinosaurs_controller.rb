@@ -1,6 +1,6 @@
 class DinosaursController < ApplicationController
 
-  # render all dinosaurs
+  # return all dinosaurs
   def index
     render json: Dinosaur.all
   end
@@ -15,7 +15,7 @@ class DinosaursController < ApplicationController
     end
   end
 
-  def update
+  # def update
     # dinosaur = Dinosaur.find(params[:id])
 
   # delete a dinosaur

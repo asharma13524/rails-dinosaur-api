@@ -27,5 +27,17 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'DELETE /dinosaurs/:id' do
+    let!(:dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
+
+    it 'deletes a dinosaur' do
+      expect {
+        delete "/dinosaurs/#{dinosaur.id}"
+      }.to change { Dinosaur.count }.from(1).to(0)
+
+
+      expect(response).to have_http_status(:no_content)
+    end
+  end
 end
 

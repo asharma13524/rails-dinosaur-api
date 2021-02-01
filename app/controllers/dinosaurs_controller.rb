@@ -5,14 +5,14 @@ class DinosaursController < ApplicationController
     render json: Dinosaur.all
   end
 
-  # return a dinosaur based on id
+  # return dinosaurs based on species
   def show
-    dinosaur = Dinosaur.find(params[:id])
+    dinosaurs = Dinosaur.filter_by_species(params[:species])
 
-    if dinosaur
-      render json: dinosaur
+    if dinosaurs
+      render json: dinosaurs
     else
-      render json: dinosaur.errors, status: :unprocessable_entity
+      render json: dinosaurs.errors, status: :unprocessable_entity
     end
   end
 
@@ -30,6 +30,7 @@ class DinosaursController < ApplicationController
   # update a dinosaur
   def update
     dinosaur = Dinosaur.find(params[:id])
+
     if dinosaur.update(dinosaur_params)
       head :no_content
     else
@@ -46,6 +47,7 @@ class DinosaursController < ApplicationController
 
   private
 
+  # A list of the param names that can be used for filtering the Product list
   def dinosaur_params
     params.require(:dinosaur).permit(:name, :species, :diet, :cage_id)
   end

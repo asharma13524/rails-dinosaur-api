@@ -38,6 +38,18 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'UPDATE /dinosaurs/:id' do
+    let!(:dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
+
+    it 'updates a dinosaur' do
+      put "/dinosaurs/#{dinosaur.id}", params: { dinosaur: { name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage.id } }
+
+      updated_dinosaur = Dinosaur.find(dinosaur.id)
+      expect(response).to have_http_status(:no_content)
+      expect(updated_dinosaur.id).to match(first_cage.id)
+    end
+  end
+
   describe 'DELETE /dinosaurs/:id' do
     let!(:dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
 

@@ -35,6 +35,18 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'UPDATE /cage/:id' do
+    let!(:cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
+
+    it 'updates a cage' do
+      put "/cages/#{cage.id}", params: { cage: { cage_status: "OFF", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3} }
+
+      updated_cage = Cage.find(cage.id)
+      expect(response).to have_http_status(:no_content)
+      expect(updated_cage.cage_status).to match("OFF")
+    end
+  end
+
   describe 'DELETE /cages/:id' do
     let!(:cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
     it 'deletes a cage' do

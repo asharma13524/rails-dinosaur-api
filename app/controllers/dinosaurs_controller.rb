@@ -16,8 +16,15 @@ class DinosaursController < ApplicationController
     end
   end
 
-  # def update
-    # dinosaur = Dinosaur.find(params[:id])
+  # update a dinosaur
+  def update
+    dinosaur = Dinosaur.find(params[:id])
+    if dinosaur.update(dinosaur_params)
+      head :no_content
+    else
+      render json: dinosaur.errors, status: :unprocessable_entity
+    end
+  end
 
   # delete a dinosaur
   def destroy

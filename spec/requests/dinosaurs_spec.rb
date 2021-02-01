@@ -16,14 +16,17 @@ describe 'Jurassic API', type: :request do
     end
   end
 
-  describe 'GET /dinosaurs/:id' do
-    let!(:dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
-    it 'returns a dinosaur by id' do
+  describe 'GET /dinosaurs/:species' do
+    let!(:first_dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
+    let!(:second_dinosaur) { FactoryBot.create(:dinosaur, name: "Mike", species: "Tyrannosaurus", diet: "carnivore", cage: second_cage) }
+    let!(:third_dinosaur) { FactoryBot.create(:dinosaur, name: "Emily", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
 
-      get "/dinosaurs/#{dinosaur.id}"
+    it 'returns dinosaurs filtered by species' do
+      # only Brachiosaurus dinosaurs
+      get "/dinosaurs/#{first_dinosaur.species}"
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)["id"]).to eq (dinosaur.id)
+      expect(JSON.parse(response.body).size).to eq (2)
     end
   end
 

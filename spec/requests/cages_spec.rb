@@ -14,14 +14,17 @@ describe 'Jurassic API', type: :request do
     end
   end
 
-  describe 'GET /cages/:id' do
-    let!(:cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
-    it 'returns a cage by id' do
+  describe 'GET /cages/:cage_status' do
+    let!(:first_cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
+    let!(:second_cage) {FactoryBot.create(:cage, cage_status: "OFF", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
+    let!(:third_cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
 
-      get "/cages/#{cage.id}"
+    it 'returns cages filtered by cage_status' do
+      # only cages with status ON
+      get "/cages/#{first_cage.cage_status}"
 
       expect(response).to have_http_status(:success)
-      expect(JSON.parse(response.body)["id"]).to eq (cage.id)
+      expect(JSON.parse(response.body).size).to eq (2)
     end
   end
 

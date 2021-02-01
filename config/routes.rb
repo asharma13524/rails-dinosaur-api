@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   resources :cages, only: [:index, :create, :update, :destroy]
   resources :dinosaurs, only: :show, param: :species
   resources :cages, only: :show, param: :cage_status
+  get 'cages/cage/:id', :to => 'cages#dino_show'
 
 end

@@ -28,6 +28,19 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'GET /cages/cage/:id' do
+    let!(:first_cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Tyrannosaurus", max_dinosaurs: 3)}
+    let!(:first_dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Tyrannosaurus", diet: "carnivore", cage: first_cage) }
+    let!(:second_dinosaur) { FactoryBot.create(:dinosaur, name: "Mike", species: "Tyrannosaurus", diet: "carnivore", cage: first_cage) }
+
+    it 'returns dinosaurs in a specific cage' do
+      get "/cages/cage/#{first_cage.id}"
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body).size).to eq (2)
+    end
+  end
+
   describe 'POST /cages' do
     it 'creates a new cage' do
       expect {

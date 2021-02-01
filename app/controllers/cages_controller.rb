@@ -27,6 +27,17 @@ class CagesController < ApplicationController
     end
   end
 
+  # get dinosaurs in a specific cage
+  def dino_show
+    cage = Cage.find(params[:id])
+
+    if cage
+      render json: cage.dinosaurs
+    else
+      render json: cage.errors, status: :unprocessable_entity
+    end
+  end
+
   # update a cage
   def update
     cage = Cage.find(params[:id])

@@ -5,6 +5,17 @@ class CagesController < ApplicationController
     render json: Cage.all
   end
 
+  # return a cage based on id
+  def show
+    cage = Cage.find(params[:id])
+
+    if cage
+      render json: cage
+    else
+      render json: cage.errors, status: :unprocessable_entity
+    end
+  end
+
   # create a new cage
   def create
     cage = Cage.new(cage_params)

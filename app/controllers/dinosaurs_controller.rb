@@ -5,6 +5,17 @@ class DinosaursController < ApplicationController
     render json: Dinosaur.all
   end
 
+  # return a dinosaur based on id
+  def show
+    dinosaur = Dinosaur.find(params[:id])
+
+    if dinosaur
+      render json: dinosaur
+    else
+      render json: dinosaur.errors, status: :unprocessable_entity
+    end
+  end
+
   # create a dinosaur
   def create
     dinosaur = Dinosaur.new(dinosaur_params)

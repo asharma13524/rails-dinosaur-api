@@ -16,6 +16,17 @@ class CagesController < ApplicationController
     end
   end
 
+  # update a cage
+  def update
+    cage = Cage.find(params[:id])
+
+    if cage.update(cage_params)
+      head :no_content
+    else
+      render json: cage.errors, status: :unprocessable_entity
+    end
+  end
+
   # delete a cage
   def destroy
     Cage.find(params[:id]).destroy!

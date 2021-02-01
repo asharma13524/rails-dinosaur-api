@@ -23,5 +23,16 @@ describe 'Jurassic API', type: :request do
       expect(response).to have_http_status(:created)
     end
   end
+
+  describe 'DELETE /cages/:id' do
+    let!(:cage) {FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species:"Spinosaurus", max_dinosaurs: 3)}
+    it 'deletes a cage' do
+      expect {
+        delete "/cages/#{cage.id}"
+      }.to change { Cage.count }.from(1).to(0)
+
+      expect(response).to have_http_status(:no_content)
+    end
+  end
 end
 

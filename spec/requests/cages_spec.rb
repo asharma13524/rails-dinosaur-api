@@ -14,6 +14,14 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'POST /cages' do
+    it 'creates a new cage' do
+      expect {
+        post '/cages', params: { cage: { cage_status: "ON", cage_type: "herbivore", species:"Tyrannosaurus", max_dinosaurs: 4} }
+      }.to change { Cage.count }.from(0).to(1)
 
+      expect(response).to have_http_status(:created)
+    end
+  end
 end
 

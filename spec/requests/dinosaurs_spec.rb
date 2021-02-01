@@ -23,7 +23,7 @@ describe 'Jurassic API', type: :request do
       }.to change { Dinosaur.count }.from(0).to(1)
 
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:created)
     end
   end
 

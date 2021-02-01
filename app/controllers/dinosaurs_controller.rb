@@ -47,7 +47,6 @@ class DinosaursController < ApplicationController
 
   private
 
-  # A list of the param names that can be used for filtering the Product list
   def dinosaur_params
     params.require(:dinosaur).permit(:name, :species, :diet, :cage_id)
   end

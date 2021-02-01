@@ -5,14 +5,14 @@ class CagesController < ApplicationController
     render json: Cage.all
   end
 
-  # return a cage based on id
+  # return a cage filtered by status
   def show
-    cage = Cage.find(params[:id])
+    cages = Cage.filter_by_cage_status(params[:cage_status])
 
-    if cage
-      render json: cage
+    if cages
+      render json: cages
     else
-      render json: cage.errors, status: :unprocessable_entity
+      render json: cages.errors, status: :unprocessable_entity
     end
   end
 

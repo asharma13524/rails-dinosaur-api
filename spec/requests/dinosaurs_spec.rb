@@ -16,6 +16,17 @@ describe 'Jurassic API', type: :request do
     end
   end
 
+  describe 'GET /dinosaurs/:id' do
+    let!(:dinosaur) { FactoryBot.create(:dinosaur, name: "Carl", species: "Brachiosaurus", diet: "herbivore", cage: first_cage) }
+    it 'returns a dinosaur by id' do
+
+      get "/dinosaurs/#{dinosaur.id}"
+
+      expect(response).to have_http_status(:success)
+      expect(JSON.parse(response.body)["id"]).to eq (dinosaur.id)
+    end
+  end
+
   describe 'POST /dinosaurs' do
     it 'creates a new dinosaur' do
       expect {

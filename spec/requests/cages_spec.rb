@@ -59,7 +59,7 @@ describe 'Jurassic API', type: :request do
 
       updated_cage = Cage.find(cage.id)
       expect(response).to have_http_status(:no_content)
-      expect(updated_cage.cage_status).to match("OFF")
+      expect(updated_cage.cage_status).to match("DOWN")
     end
   end
 

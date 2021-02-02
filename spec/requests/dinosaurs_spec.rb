@@ -36,6 +36,9 @@ describe 'Jurassic API', type: :request do
         post '/dinosaurs', params: { dinosaur: {name: 'Lily', species: 'Tyrannosaurus', diet: 'carnivore', cage_id: second_cage.id} }
       }.to change { Dinosaur.count }.from(0).to(1)
 
+      expect {
+        post '/dinosaurs', params: { dinosaur: {name: 'Emma', species: 'herbivore', diet: 'herbivore', cage_id: second_cage.id} }
+      }.to change { Dinosaur.count }.from(1).to(2)
 
       expect(response).to have_http_status(:created)
     end

@@ -3,7 +3,6 @@
 I ran out of time but some things I would want to do:
 
 -   namespace/versioning the api
--
 -   add representers
 -   Test my create dinosaur route with more robust cases (it may be failing in some cases)
 -   seeding the test database

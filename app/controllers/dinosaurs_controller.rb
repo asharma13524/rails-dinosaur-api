@@ -19,11 +19,43 @@ class DinosaursController < ApplicationController
   # create a dinosaur
   def create
     dinosaur = Dinosaur.new(dinosaur_params)
+    cage_id = params[:cage_id]
+    if Cage.exists?(id:cage_id)
+      cage = Cage.find(cage_id)
+    end
+    species = params[:species]
+    diet = params[:diet]
+    if(cage && cage.cage_status != "DOWN" && diet == cage.cage_type && diet == "herbivore" && cage.dinosaurs.length < cage.max_dinosaurs)
+      if dinosaur.save
+        render json: dinosaur, status: :created
+      end
 
-    if dinosaur.save
-      render json: dinosaur, status: :created
+    elsif(cage && cage.cage_status != "DOWN" && cage.cage_type == "carnivore" && cage.species == species && cage.dinosaurs.length < cage.max_dinosaurs)
+      if dinosaur.save
+        render json: dinosaur, status: :created
+      end
+
     else
-      render json: dinosaur.errors, status: :unprocessable_entity
+      # loop through all existing cages and see if we can place dinosaur
+      Cage.all.each do | cage |
+        if( cage.cage_status != "DOWN" && diet == cage.cage_type && diet == "herbivore" && cage.dinosaurs.length < cage.max_dinosaurs)
+          if dinosaur.save
+            render json: dinosaur, status: :created
+            return
+          end
+
+        elsif(cage.cage_status != "DOWN" && diet == cage.cage_type && diet == "carnivore" && cage.species == species && cage.dinosaurs.length < cage.max_dinosaurs)
+          if dinosaur.save
+            render json: dinosaur, status: :created
+          end
+        end
+      end
+      # if we can't place dinosaur in existing cage, create new cage
+      new_cage = Cage.create!(cage_status: "ACTIVE", cage_type: diet, species: species, max_dinosaurs: 3)
+      dinosaur.cage_id = new_cage.id
+      if dinosaur.save
+        render json: dinosaur, status: :created
+      end
     end
   end
 

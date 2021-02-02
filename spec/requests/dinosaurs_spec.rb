@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 describe 'Jurassic API', type: :request do
-  let(:first_cage) { FactoryBot.create(:cage, cage_status: "ON", cage_type: "herbivore", species: "herbivore", max_dinosaurs: 3)}
-  let(:second_cage) { FactoryBot.create(:cage, cage_status: "ON", cage_type: "carnivore", species: "Tyrannosaurus", max_dinosaurs: 3)}
+  let(:first_cage) { FactoryBot.create(:cage, cage_status: "ACTIVE", cage_type: "herbivore", species: "herbivore", max_dinosaurs: 3)}
+  let(:second_cage) { FactoryBot.create(:cage, cage_status: "ACTIVE", cage_type: "carnivore", species: "Tyrannosaurus", max_dinosaurs: 3)}
 
   describe 'GET /dinosaurs' do
     it 'returns all dinosaurs' do
